@@ -1,14 +1,14 @@
 import { motion } from "framer-motion";
-
+import { FaEye, FaCode } from "react-icons/fa";
 const Section = (props) => {
   const { children } = props;
 
   return (
     <motion.section
       className={`
-  h-screen w-screen p-8 max-w-screen-2xl mx-auto
-  flex flex-col items-start justify-center
-  `}
+        min-h-screen w-screen p-8 max-w-screen-2xl mx-auto
+        flex flex-col items-start justify-center
+      `}
       initial={{
         opacity: 0,
         y: 50,
@@ -32,9 +32,7 @@ export const Interface = () => {
     <div className="flex flex-col items-center w-screen">
       <AboutSection />
       <SkillsSection />
-      <Section>
-        <h1>Projects</h1>
-      </Section>
+      <ProjectsSection />
       <ContactSection />
     </div>
   );
@@ -237,7 +235,10 @@ const ContactSection = () => {
       <h2 className="text-5xl font-bold">Contact me</h2>
       <div className="mt-8 p-8 rounded-md bg-white w-96 max-w-full">
         <form>
-          <label for="name" className="font-medium text-gray-900 block mb-1">
+          <label
+            htmlFor="name"
+            className="font-medium text-gray-900 block mb-1"
+          >
             Name
           </label>
           <input
@@ -247,7 +248,7 @@ const ContactSection = () => {
             className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
           />
           <label
-            for="email"
+            htmlFor="email"
             className="font-medium text-gray-900 block mb-1 mt-8"
           >
             Email
@@ -259,7 +260,7 @@ const ContactSection = () => {
             className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
           />
           <label
-            for="email"
+            htmlFor="email"
             className="font-medium text-gray-900 block mb-1 mt-8"
           >
             Message
@@ -274,6 +275,85 @@ const ContactSection = () => {
           </button>
         </form>
       </div>
+    </Section>
+  );
+};
+
+const projects = [
+  {
+    title: "Project 1",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    image: "/textures/newsflow.png",
+    demoLink: "#", // Replace with the actual demo link
+    codeLink: "#", // Replace with the actual code link
+  },
+  {
+    title: "Project 2",
+    description:
+      "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    image: "/images/project2.jpg", // Replace with the actual image path
+    demoLink: "#", // Replace with the actual demo link
+    codeLink: "#", // Replace with the actual code link
+  },
+  {
+    title: "Project 3",
+    description:
+      "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
+    image: "/images/project3.jpg", // Replace with the actual image path
+    demoLink: "#", // Replace with the actual demo link
+    codeLink: "#", // Replace with the actual code link
+  },
+  {
+    title: "Project 4",
+    description:
+      "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    image: "/images/project4.jpg", // Replace with the actual image path
+    demoLink: "#", // Replace with the actual demo link
+    codeLink: "#", // Replace with the actual code link
+  },
+];
+
+const ProjectsSection = () => {
+  return (
+    <Section>
+      <motion.div whileInView={"visible"}>
+        <h2 className="text-5xl font-bold">Projects</h2>
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {projects.map((project, index) => (
+            <div className="bg-white p-6 rounded-md shadow-md" key={index}>
+              <img
+                src={project.image}
+                alt={project.title}
+                className="w-full h-40 object-cover mb-4 rounded-md"
+              />
+              <h3 className="text-xl font-bold text-gray-800 mb-2">
+                {project.title}
+              </h3>
+              <p className="text-gray-600">{project.description}</p>
+              <div className="mt-4 flex justify-between">
+                <a
+                  href={project.demoLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center bg-indigo-600 text-white py-2 px-4 rounded-md font-bold text-sm"
+                >
+                  <FaEye className="mr-2" />
+                  Demo
+                </a>
+                <a
+                  href={project.codeLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center bg-gray-800 text-white py-2 px-4 rounded-md font-bold text-sm"
+                >
+                  <FaCode className="mr-2" />
+                  Code
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </motion.div>
     </Section>
   );
 };
