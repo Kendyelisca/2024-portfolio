@@ -1,13 +1,14 @@
 import { motion } from "framer-motion";
 import { FaEye, FaCode } from "react-icons/fa";
+
 const Section = (props) => {
   const { children } = props;
 
   return (
     <motion.section
       className={`
-        min-h-screen w-screen p-8 max-w-screen-2xl mx-auto
-        flex flex-col items-start justify-center
+        h-screen w-screen p-8 max-w-screen-2xl mx-auto
+  flex flex-col items-start justify-center
       `}
       initial={{
         opacity: 0,
