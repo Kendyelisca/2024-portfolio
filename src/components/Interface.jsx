@@ -1,5 +1,7 @@
+import { useThree } from "@react-three/fiber";
 import { motion } from "framer-motion";
-import { FaEye, FaCode } from "react-icons/fa";
+import { useAtom } from "jotai";
+import { currentProjectAtom, projects } from "./Projects";
 
 const Section = (props) => {
   const { children } = props;
@@ -7,9 +9,9 @@ const Section = (props) => {
   return (
     <motion.section
       className={`
-        h-screen w-screen p-8 max-w-screen-2xl mx-auto
+  h-screen w-screen p-8 max-w-screen-2xl mx-auto
   flex flex-col items-start justify-center
-      `}
+  `}
       initial={{
         opacity: 0,
         y: 50,
@@ -28,10 +30,12 @@ const Section = (props) => {
   );
 };
 
-export const Interface = () => {
+export const Interface = (props) => {
+  const { setSection } = props;
+
   return (
     <div className="flex flex-col items-center w-screen">
-      <AboutSection />
+      <AboutSection setSection={setSection} />
       <SkillsSection />
       <ProjectsSection />
       <ContactSection />
@@ -39,13 +43,15 @@ export const Interface = () => {
   );
 };
 
-const AboutSection = () => {
+const AboutSection = (props) => {
+  const { setSection } = props;
+
   return (
     <Section>
       <h1 className="text-6xl font-extrabold leading-snug">
         Hi, meet
         <br />
-        <span className="bg-white px-1 italic">Kendy Elisca</span>
+        <span className="bg-green-300 px-1 italic">Kendy Elisca</span>
       </h1>
       <motion.p
         className="text-lg text-gray-600 mt-4"
@@ -64,9 +70,10 @@ const AboutSection = () => {
       >
         Extraordinary software developer
         <br />
-        Let's make your idea come to life together
+        let's make your idea come to life to gether
       </motion.p>
       <motion.button
+        onClick={() => setSection(3)}
         className={`bg-indigo-600 text-white py-4 px-8 
       rounded-lg font-bold text-lg mt-16`}
         initial={{
@@ -82,7 +89,7 @@ const AboutSection = () => {
           delay: 2,
         }}
       >
-        Let's have a chat
+        Contact me
       </motion.button>
     </Section>
   );
@@ -90,11 +97,11 @@ const AboutSection = () => {
 
 const skills = [
   {
-    title: "Reactjs / Nextjs",
+    title: "ReactJS / NextJS / React Native",
     level: 90,
   },
   {
-    title: "React Native",
+    title: "Threejs / React Three Fiber",
     level: 80,
   },
   {
@@ -102,20 +109,12 @@ const skills = [
     level: 90,
   },
   {
-    title: "Threejs / React Three Fiber",
+    title: "Typescript",
     level: 60,
   },
   {
-    title: "PostgreSQL",
+    title: "Postgres / MongoDB",
     level: 90,
-  },
-  {
-    title: "MongoDB",
-    level: 80,
-  },
-  {
-    title: "Python / flask",
-    level: 80,
   },
 ];
 const languages = [
@@ -137,7 +136,7 @@ const SkillsSection = () => {
   return (
     <Section>
       <motion.div whileInView={"visible"}>
-        <h2 className="text-5xl font-bold">Skills</h2>
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">Skills</h2>
         <div className=" mt-8 space-y-4">
           {skills.map((skill, index) => (
             <div className="w-64" key={index}>
@@ -181,7 +180,9 @@ const SkillsSection = () => {
           ))}
         </div>
         <div>
-          <h2 className="text-5xl font-bold mt-10">Languages</h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mt-10">
+            Languages
+          </h2>
           <div className=" mt-8 space-y-4">
             {languages.map((lng, index) => (
               <div className="w-64" key={index}>
@@ -230,16 +231,45 @@ const SkillsSection = () => {
   );
 };
 
+const ProjectsSection = () => {
+  const [currentProject, setCurrentProject] = useAtom(currentProjectAtom);
+
+  const nextProject = () => {
+    setCurrentProject((currentProject + 1) % projects.length);
+  };
+
+  const previousProject = () => {
+    setCurrentProject((currentProject - 1 + projects.length) % projects.length);
+  };
+
+  return (
+    <Section>
+      <div className="flex w-full h-full gap-8 items-center justify-center mt-[500px] mb-20">
+        <button
+          className="hover:text-indigo-600 transition-colors"
+          onClick={previousProject}
+        >
+          ← Previous
+        </button>
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">Projects</h2>
+        <button
+          className="hover:text-indigo-600 transition-colors"
+          onClick={nextProject}
+        >
+          Next →
+        </button>
+      </div>
+    </Section>
+  );
+};
+
 const ContactSection = () => {
   return (
     <Section>
-      <h2 className="text-5xl font-bold">Contact me</h2>
+      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">Contact me</h2>
       <div className="mt-8 p-8 rounded-md bg-white w-96 max-w-full">
         <form>
-          <label
-            htmlFor="name"
-            className="font-medium text-gray-900 block mb-1"
-          >
+          <label for="name" className="font-medium text-gray-900 block mb-1">
             Name
           </label>
           <input
@@ -249,7 +279,7 @@ const ContactSection = () => {
             className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
           />
           <label
-            htmlFor="email"
+            for="email"
             className="font-medium text-gray-900 block mb-1 mt-8"
           >
             Email
@@ -261,7 +291,7 @@ const ContactSection = () => {
             className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
           />
           <label
-            htmlFor="email"
+            for="email"
             className="font-medium text-gray-900 block mb-1 mt-8"
           >
             Message
@@ -276,85 +306,6 @@ const ContactSection = () => {
           </button>
         </form>
       </div>
-    </Section>
-  );
-};
-
-const projects = [
-  {
-    title: "Project 1",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    image: "/textures/newsflow.png",
-    demoLink: "#", // Replace with the actual demo link
-    codeLink: "#", // Replace with the actual code link
-  },
-  {
-    title: "Project 2",
-    description:
-      "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    image: "/images/project2.jpg", // Replace with the actual image path
-    demoLink: "#", // Replace with the actual demo link
-    codeLink: "#", // Replace with the actual code link
-  },
-  {
-    title: "Project 3",
-    description:
-      "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-    image: "/images/project3.jpg", // Replace with the actual image path
-    demoLink: "#", // Replace with the actual demo link
-    codeLink: "#", // Replace with the actual code link
-  },
-  {
-    title: "Project 4",
-    description:
-      "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-    image: "/images/project4.jpg", // Replace with the actual image path
-    demoLink: "#", // Replace with the actual demo link
-    codeLink: "#", // Replace with the actual code link
-  },
-];
-
-const ProjectsSection = () => {
-  return (
-    <Section>
-      <motion.div whileInView={"visible"}>
-        <h2 className="text-5xl font-bold">Projects</h2>
-        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {projects.map((project, index) => (
-            <div className="bg-white p-6 rounded-md shadow-md" key={index}>
-              <img
-                src={project.image}
-                alt={project.title}
-                className="w-full h-40 object-cover mb-4 rounded-md"
-              />
-              <h3 className="text-xl font-bold text-gray-800 mb-2">
-                {project.title}
-              </h3>
-              <p className="text-gray-600">{project.description}</p>
-              <div className="mt-4 flex justify-between">
-                <a
-                  href={project.demoLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center bg-indigo-600 text-white py-2 px-4 rounded-md font-bold text-sm"
-                >
-                  <FaEye className="mr-2" />
-                  Demo
-                </a>
-                <a
-                  href={project.codeLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center bg-gray-800 text-white py-2 px-4 rounded-md font-bold text-sm"
-                >
-                  <FaCode className="mr-2" />
-                  Code
-                </a>
-              </div>
-            </div>
-          ))}
-        </div>
-      </motion.div>
     </Section>
   );
 };

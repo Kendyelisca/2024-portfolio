@@ -3,6 +3,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { TorusKnotGeometry, ShaderMaterial } from "three";
 import { motion } from "framer-motion-3d";
 import { animate, useMotionValue } from "framer-motion";
+import { Projects } from "./Projects";
 
 const RotatingObject = ({ geometry, material, rotationSpeed }) => {
   const meshRef = useRef();
@@ -39,8 +40,7 @@ export const Experience = (props) => {
       <ambientLight intensity={0.5} />
       <motion.group
         animate={{
-          y:
-            section === 0 ? 0 : section === 1 ? -4.2 : section === 2 ? -8 : -12,
+          y: section === 0 ? 0 : section === 1 ? -4.2 : -12,
         }}
       >
         {" "}
@@ -71,6 +71,7 @@ export const Experience = (props) => {
           rotationSpeed={0.01}
         />
       </motion.group>
+      <Projects />
     </>
   );
 };
