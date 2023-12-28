@@ -2,6 +2,8 @@ import { useThree } from "@react-three/fiber";
 import { motion } from "framer-motion";
 import { useAtom } from "jotai";
 import { currentProjectAtom, projects } from "./Projects";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Section = (props) => {
   const { children } = props;
@@ -54,7 +56,7 @@ const AboutSection = (props) => {
         <span className="bg-green-300 px-1 italic">Kendy Elisca</span>
       </h1>
       <motion.p
-        className="text-lg text-gray-600 mt-4"
+        className="text-lg text-gray-900 mt-4"
         initial={{
           opacity: 0,
           y: 25,
@@ -70,7 +72,7 @@ const AboutSection = (props) => {
       >
         Extraordinary software developer
         <br />
-        let's make your idea come to life to gether
+        let's make your idea come to life together!
       </motion.p>
       <motion.button
         onClick={() => setSection(3)}
@@ -264,11 +266,43 @@ const ProjectsSection = () => {
 };
 
 const ContactSection = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [isSending, setIsSending] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSending(true);
+
+    try {
+      const response = await axios.post(
+        "https://email-backend-6kh4.onrender.com/emails/contact",
+        {
+          name,
+          email,
+          message,
+        }
+      );
+
+      // Handle success
+      setIsSuccess(true);
+      console.log("Message sent successfully!", response.data);
+    } catch (error) {
+      // Handle errors
+      setIsSuccess(false);
+      console.error("Error sending message", error);
+    } finally {
+      setIsSending(false);
+    }
+  };
+
   return (
     <Section>
       <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">Contact me</h2>
       <div className="mt-8 p-8 rounded-md bg-white w-96 max-w-full">
-        <form>
+        <form onSubmit={handleSubmit}>
           <label for="name" className="font-medium text-gray-900 block mb-1">
             Name
           </label>
@@ -276,6 +310,8 @@ const ContactSection = () => {
             type="text"
             name="name"
             id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
           />
           <label
@@ -288,6 +324,8 @@ const ContactSection = () => {
             type="email"
             name="email"
             id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
           />
           <label
@@ -299,10 +337,24 @@ const ContactSection = () => {
           <textarea
             name="message"
             id="message"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
             className="h-32 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
           />
-          <button className="bg-indigo-600 text-white py-4 px-8 rounded-lg font-bold text-lg mt-16 ">
-            Submit
+          {isSuccess === true && (
+            <p className="text-indigo-600">Message sent successfully!</p>
+          )}
+          {isSuccess === false && (
+            <p className="text-red-600">
+              Error sending message. Please try again.
+            </p>
+          )}
+
+          <button
+            type="submit"
+            className="bg-indigo-600 text-white py-4 px-8 rounded-lg font-bold text-lg mt-16 "
+          >
+            {isSending ? "Submiting" : "Submit"}
           </button>
         </form>
       </div>
