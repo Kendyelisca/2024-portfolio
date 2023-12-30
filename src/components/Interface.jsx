@@ -1,6 +1,7 @@
 import { useThree } from "@react-three/fiber";
 import { motion } from "framer-motion";
 import { useAtom } from "jotai";
+import CV from "../assets/kendy_cv_EN.pdf";
 import { currentProjectAtom, projects } from "./Projects";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -74,25 +75,48 @@ const AboutSection = (props) => {
         <br />
         let's make your idea come to life together!
       </motion.p>
-      <motion.button
-        onClick={() => setSection(3)}
-        className={`bg-indigo-600 text-white py-4 px-8 
+      <div className="flex gap-2">
+        {" "}
+        <motion.button
+          onClick={() => setSection(3)}
+          className={`bg-indigo-600 text-white py-4 px-8 
       rounded-lg font-bold text-lg mt-16`}
-        initial={{
-          opacity: 0,
-          y: 25,
-        }}
-        whileInView={{
-          opacity: 1,
-          y: 0,
-        }}
-        transition={{
-          duration: 1,
-          delay: 2,
-        }}
-      >
-        Contact me
-      </motion.button>
+          initial={{
+            opacity: 0,
+            y: 25,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 1,
+            delay: 2,
+          }}
+        >
+          Contact me
+        </motion.button>
+        <motion.button
+          className={`bg-green-300 text-black py-4 px-8 
+          rounded-lg font-bold text-lg mt-16`}
+          initial={{
+            opacity: 0,
+            y: 25,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 1,
+            delay: 2,
+          }}
+        >
+          <a href={CV} target="_blank" rel="noopener noreferrer">
+            CV
+          </a>
+        </motion.button>
+      </div>
     </Section>
   );
 };
