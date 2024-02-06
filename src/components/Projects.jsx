@@ -21,6 +21,13 @@ export const projects = [
     url: "https://strong-mooncake-11c81e.netlify.app/",
   },
   {
+    title: "Xtracine",
+    description:
+      "A dynamic news app with latest news updates in the movie field, you'll find news related to your favorite movie. ",
+    image: "/textures/xtracine.png",
+    url: "https://www.xtracine.com/",
+  },
+  {
     title: "Pokedex App",
     description:
       "A comprehensive Pokemon encyclopedia with user login and personalized features.",
