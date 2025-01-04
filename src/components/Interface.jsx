@@ -1,7 +1,7 @@
 import { useThree } from "@react-three/fiber";
 import { motion } from "framer-motion";
 import { useAtom } from "jotai";
-import CV from "../assets/kendy_cv_EN.pdf";
+import CV from "../assets/Kendy Elisca cv.pdf";
 import { currentProjectAtom, projects } from "./Projects";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -96,26 +96,26 @@ const AboutSection = (props) => {
         >
           Contact me
         </motion.button>
-        <motion.button
-          className={`bg-green-300 text-black py-4 px-8 
+        <a href={CV} target="_blank" rel="noopener noreferrer">
+          <motion.button
+            className={`bg-green-300 text-black py-4 px-8 
           rounded-lg font-bold text-lg mt-16`}
-          initial={{
-            opacity: 0,
-            y: 25,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 1,
-            delay: 2,
-          }}
-        >
-          <a href={CV} target="_blank" rel="noopener noreferrer">
+            initial={{
+              opacity: 0,
+              y: 25,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 1,
+              delay: 2,
+            }}
+          >
             CV
-          </a>
-        </motion.button>
+          </motion.button>
+        </a>
       </div>
     </Section>
   );
@@ -123,24 +123,29 @@ const AboutSection = (props) => {
 
 const skills = [
   {
-    title: "ReactJS / NextJS / React Native",
+    title:
+      "ReactJS / NextJS / React Native / Redux / Tailwind CSS / Elearning Platforms",
     level: 90,
   },
   {
-    title: "Threejs / React Three Fiber",
+    title: "Threejs / React Three Fiber / WebGL / Babylon.js",
+    level: 70,
+  },
+  {
+    title: "Nodejs / Express / NestJS / Fastify / Microservices",
+    level: 90,
+  },
+  {
+    title: "Typescript / JavaScript (ES6+) / Python",
     level: 80,
   },
   {
-    title: "Nodejs",
+    title: "NOSQL and SQL Databases (MongoDB, DynamoDB, MySQL, PostgreSQL)",
     level: 90,
   },
   {
-    title: "Typescript",
-    level: 60,
-  },
-  {
-    title: "Postgres / MongoDB",
-    level: 90,
+    title: "Cloud Computing (AWS, DigitalOcean) / Serverless Architectures",
+    level: 85,
   },
 ];
 const languages = [
@@ -165,7 +170,7 @@ const SkillsSection = () => {
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">Skills</h2>
         <div className=" mt-8 space-y-4">
           {skills.map((skill, index) => (
-            <div className="w-64" key={index}>
+            <div className="max-w-full" key={index}>
               <motion.h3
                 className="text-xl font-bold text-gray-800"
                 initial={{
@@ -313,6 +318,11 @@ const ContactSection = () => {
       // Handle success
       setIsSuccess(true);
       console.log("Message sent successfully!", response.data);
+
+      // Clear the form
+      setName("");
+      setEmail("");
+      setMessage("");
     } catch (error) {
       // Handle errors
       setIsSuccess(false);
@@ -325,45 +335,35 @@ const ContactSection = () => {
   return (
     <Section>
       <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">Contact me</h2>
-      <div className="mt-8 p-8 rounded-md bg-white w-96 max-w-full">
+      <div className="mt-8 p-8 rounded-md bg-white w-[600px] max-w-full">
         <form onSubmit={handleSubmit}>
-          <label for="name" className="font-medium text-gray-900 block mb-1">
-            Name
-          </label>
           <input
             type="text"
             name="name"
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
+            className="block w-full border-indigo-600 border-2 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
+            placeholder="Enter your name..."
           />
-          <label
-            for="email"
-            className="font-medium text-gray-900 block mb-1 mt-8"
-          >
-            Email
-          </label>
+
           <input
             type="email"
             name="email"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
+            className="block w-full border-indigo-600 mt-8 rounded-md border-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
+            placeholder="Enter your email..."
           />
-          <label
-            for="email"
-            className="font-medium text-gray-900 block mb-1 mt-8"
-          >
-            Message
-          </label>
+
           <textarea
             name="message"
             id="message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            className="h-32 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
+            className="h-32 block w-full border-indigo-600 mt-8 rounded-md border-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 p-3"
+            placeholder="Enter your message..."
           />
           {isSuccess === true && (
             <p className="text-indigo-600">Message sent successfully!</p>

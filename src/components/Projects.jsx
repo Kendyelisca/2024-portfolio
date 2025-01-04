@@ -7,6 +7,13 @@ import { useEffect, useRef } from "react";
 
 export const projects = [
   {
+    title: "Insight eLearning",
+    description:
+      "Insight is an AI-powered eLearning platform offering personalized learning paths and career-focused features.",
+    image: "/textures/insight-r.png",
+    url: "https://insight-learning.org",
+  },
+  {
     title: "NewsFlow",
     description:
       "A dynamic news app with latest updates, article saving, and newsletter subscription.",
@@ -20,13 +27,7 @@ export const projects = [
     image: "/textures/rick.png",
     url: "https://strong-mooncake-11c81e.netlify.app/",
   },
-  {
-    title: "Xtracine",
-    description:
-      "A dynamic news app with latest news updates in the movie field, you'll find news related to your favorite movie. ",
-    image: "/textures/xtracine.png",
-    url: "https://www.xtracine.com/",
-  },
+
   {
     title: "Pokedex App",
     description:
